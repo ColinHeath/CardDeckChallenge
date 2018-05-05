@@ -1,23 +1,41 @@
 #include "Deck.h"
 #include <cstdlib>
 
+bool Card::operator>(const Card rhs) const
+{
+	return (this->value > rhs.value);
+}
+
+bool Card::operator<(const Card rhs) const
+{
+	return (this->value < rhs.value);
+}
+
+bool Card::operator==(const Card rhs) const
+{
+	return ((this->suit == rhs.suit) && (this->value == rhs.value));
+}
+
+bool Card::operator!=(const Card rhs) const
+{
+	return !((*this) == rhs);
+}
+
 Deck::Deck()
 :topIndex(0)
 {
-	//Temporary lookup arrays to make population easier.
+	//Temporary lookup array to make population easier.
 	std::string suits[4] = {"Diamonds", "Hearts", "Clubs", "Spades"};
-	std::string values[13] = 
-		{"Ace". "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
 	
 	//Populate Internal Deck with Card Structs
 	for(size_t i = 0; i < 4; i++)
 	{
-		for(size_t j = 0; j < 13; j++)
+		for(int j = 0; j < 13; j++)
 		{
 			Card toAdd;
 			
 			toAdd.suit = suits[i];
-			toAdd.value = values[j];
+			toAdd.value = j + 1;
 
 			this->internalDeck[(13*i) + j] = toAdd;
 		}
@@ -37,14 +55,22 @@ void Deck::shuffle()
 
 Card Deck::deal()
 {
-	return this->internalDeck[topIndex++];
+	if(topIndex < 52)
+	{
+		return this->internalDeck[topIndex++];
+	}
+	else
+	{
+		std::out_of_range outOfRange("End of Deck has been Reached");
+		throw outOfRange;
+	}
 }
 
 std::vector<Card> Deck::dealHand(int handSize)
 {
 	std::vector<Card> toReturn;
 
-	for(size_t i = 0; i < handSize; i++)
+	for(int i = 0; i < handSize; i++)
 	{
 		toReturn.push_back(this->deal());
 	}
@@ -55,15 +81,15 @@ std::vector<Card> Deck::dealHand(int handSize)
 void Deck::shuffleFromTop()
 {
 	//Seed the cstdlib random generator pseudorandomly with time.
-	std::srand(std::time(0));
+	std::srand(time(0));
 
 	int j;
-	int temp;
+	Card temp;
 	for(int i = 51; i > this->topIndex; i--)
 	{
 		j = (std::rand() % (i + 1));
-		temp = cards[j];
-		cards[j] = cards[i];
-		cards[i] = temp;
+		temp = (this->internalDeck)[j];
+		(this->internalDeck)[j] = (this->internalDeck)[i];
+		(this->internalDeck)[i] = temp;
 	}
 }
