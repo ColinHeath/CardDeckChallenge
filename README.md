@@ -12,3 +12,5 @@ The Deck class automatically populates itself with 52 unshuffled cards. It suppo
 
 When using the class and struct in other work, it is important to keep in mind that
 the types of Card's data members are string and integer, so the value of a card cannot be compared against the string "Jack".
+
+Additionally, there is a makefile provided for compiling automated tests of the Deck class. The makefile produces an executable, deckTest, which will run a series of short tests to ensure that the Deck class functions as intended.
