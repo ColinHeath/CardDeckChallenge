@@ -39,6 +39,15 @@ TEST(DeckTest, DealLimit)
 	}
 }
 
+TEST(DeckTest, HandLimit)
+{
+	Deck deck;
+
+	std::vector<Card> userHand = deck.dealHand(53);
+
+	EXPECT_EQ(userHand.size(), 52);
+}
+
 //Test to ensure that shuffling sufficiently changes the deck.
 TEST(DeckTest, ShuffleChange)
 {

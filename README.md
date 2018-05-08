@@ -14,3 +14,6 @@ When using the class and struct in other work, it is important to keep in mind t
 the types of Card's data members are string and integer, so the value of a card cannot be compared against the string "Jack".
 
 Additionally, there is a makefile provided for compiling automated tests of the Deck class. The makefile produces an executable, deckTest, which will run a series of short tests to ensure that the Deck class functions as intended.
+
+**Additional Notes**
+- The tests provided use the GTest library, which comes standard in student VMs at USC.
